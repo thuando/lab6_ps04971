@@ -1,0 +1,885 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package panel;
+
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Vector;
+import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
+
+
+/**
+ *
+ * @author USER
+ */
+public class giohangPanel extends javax.swing.JPanel {
+
+    /**
+     * Creates new form giohangPanel
+     */
+    String url = "jdbc:sqlserver://localhost:1433;databaseName=Database-mẫu";
+    String user = "sa", pass = "1", user1 = null,manv = null;
+    Vector nv = null, nv1 = null;
+    int r = 0, r1 = 0, kt = 0, tong = 0;
+    boolean ktms = true, ktms1 = true;
+    DefaultTableModel model1 = null, model = null;
+        int id=0;
+     HoaDon ncc;
+    GridBagLayout layout = new GridBagLayout();
+
+    public giohangPanel() {
+        initComponents();
+        tab.getSelectionModel()
+                .setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tab.getColumnModel().getSelectionModel()
+                .setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+         tab1.getSelectionModel()
+                .setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tab1.getColumnModel().getSelectionModel()
+                .setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        model1 = (DefaultTableModel) tab1.getModel();
+        model1.setRowCount(0);
+        tab.setVisible(false);
+        bnt_lm.setVisible(true);
+        bnt_sua.setVisible(false);
+        bnt_them.setVisible(false);
+    }
+
+    public giohangPanel(String ma) {
+        initComponents();
+        model1 = (DefaultTableModel) tab1.getModel();
+        model1.setRowCount(0);
+        tab.setVisible(false);
+        bnt_lm.setVisible(false);
+        bnt_sua.setVisible(false);
+        bnt_them.setVisible(false);
+        this.user1 = ma;
+        
+         try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Connection con = DriverManager.getConnection(url, user, pass);
+            String sql = "select MaNV from Nhan_Vien where  username like '" + user1 + "'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                manv = rs.getString("MaNV") + "";
+            }
+            con.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+         
+          try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Connection con = DriverManager.getConnection(url, user, pass);
+            String sql1 = "  Select top 1 MaKH from Khach_Hang order by MaKH DESC ";
+            Statement st1 = con.createStatement();
+            ResultSet rs = st1.executeQuery(sql1);
+            while (rs.next()) {
+                id = rs.getInt(1);
+            }
+            id++;
+            txtmakh.setText(id+"");
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    void loadtable() {
+        model = (DefaultTableModel) tab.getModel();
+        model.setRowCount(0);
+
+        try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Connection con = DriverManager.getConnection(url, user, pass);
+            String sql = " select * from Mat_Hang ";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                nv = new Vector();
+                nv.add(rs.getString("TenHang"));
+                nv.add(rs.getString("DonGia"));
+                nv.add(rs.getString("MaHang"));
+                nv.add(rs.getString("SoLuong"));
+                model.addRow(nv);
+            }
+            con.close();
+        } catch (Exception e) {
+            System.out.println(e);
+            JOptionPane.showMessageDialog(this, "load dữ liệu That Bai!");
+        }
+    }
+
+    void loadlentable(int r) {
+        if (r < 0) {
+            return;
+        }
+        nv1 = new Vector();
+        nv1.add(tab.getValueAt(r, 0).toString());
+        nv1.add(tab.getValueAt(r, 1).toString());
+        nv1.add("1");
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        jPanel1 = new javax.swing.JPanel();
+        txt_search = new javax.swing.JTextField();
+        bnt_seach = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tab = new javax.swing.JTable();
+        jButton4 = new javax.swing.JButton();
+        txtsdt = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        txtkh = new javax.swing.JTextField();
+        txtdc = new javax.swing.JTextField();
+        jLabel25 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tab1 = new javax.swing.JTable();
+        jLabel27 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        bnthoadon = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        bnt_them = new javax.swing.JButton();
+        bnt_lm = new javax.swing.JButton();
+        bnt_sua = new javax.swing.JButton();
+        jLabel26 = new javax.swing.JLabel();
+        txtmakh = new javax.swing.JLabel();
+
+        setBackground(new java.awt.Color(255, 255, 255));
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
+        bnt_seach.setBackground(new java.awt.Color(255, 255, 255));
+        bnt_seach.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Search_25px.png"))); // NOI18N
+        bnt_seach.setText("SEARCH");
+        bnt_seach.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bnt_seachActionPerformed(evt);
+            }
+        });
+
+        jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
+
+        tab.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Tên hàng", "Giá", "Mã hàng", "Số Lượng"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tab.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tab);
+
+        jButton4.setBackground(new java.awt.Color(255, 255, 255));
+        jButton4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jButton4.setText("THÊM");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        txtsdt.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtsdt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtsdtKeyReleased(evt);
+            }
+        });
+
+        jLabel6.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel6.setText("TÊN KHÁCH: ");
+
+        txtkh.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+
+        txtdc.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+
+        jLabel25.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel25.setText("ĐỊA CHỈ:");
+
+        jLabel24.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel24.setText("SĐT:");
+
+        tab1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Tên hàng", "Giá", "Số lượng"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tab1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tab1MouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(tab1);
+
+        jLabel27.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel27.setText("TỔNG: ");
+
+        jLabel1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel1.setText("..............");
+
+        bnthoadon.setBackground(new java.awt.Color(255, 255, 255));
+        bnthoadon.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        bnthoadon.setText("Hóa Đơn");
+        bnthoadon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bnthoadonActionPerformed(evt);
+            }
+        });
+
+        jButton5.setBackground(new java.awt.Color(255, 255, 255));
+        jButton5.setText("XÓA");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        bnt_them.setBackground(new java.awt.Color(255, 255, 255));
+        bnt_them.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        bnt_them.setText("Lưu");
+        bnt_them.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bnt_themActionPerformed(evt);
+            }
+        });
+
+        bnt_lm.setBackground(new java.awt.Color(255, 255, 255));
+        bnt_lm.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        bnt_lm.setText("làm mới");
+        bnt_lm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bnt_lmActionPerformed(evt);
+            }
+        });
+
+        bnt_sua.setBackground(new java.awt.Color(255, 255, 255));
+        bnt_sua.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        bnt_sua.setText("SỬA");
+        bnt_sua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bnt_suaActionPerformed(evt);
+            }
+        });
+
+        jLabel26.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel26.setText("Mã Khách Hàng");
+
+        txtmakh.setBackground(new java.awt.Color(255, 255, 255));
+        txtmakh.setFont(new java.awt.Font("Calibri", 0, 20)); // NOI18N
+        txtmakh.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtmakh.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtmakhMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(bnthoadon)
+                .addGap(74, 74, 74))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel24)
+                    .addComponent(jLabel26))
+                .addGap(24, 24, 24)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtmakh, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtsdt, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 390, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 660, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(0, 0, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(bnt_lm)
+                                    .addGap(54, 54, 54)
+                                    .addComponent(bnt_them)
+                                    .addGap(36, 36, 36)
+                                    .addComponent(bnt_sua))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel25)
+                                        .addComponent(jLabel6))
+                                    .addGap(40, 40, 40)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(txtkh, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtdc, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGap(133, 133, 133)
+                                    .addComponent(jButton4))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(txt_search, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(bnt_seach))))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                            .addGap(0, 95, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jButton5)
+                                    .addGap(173, 173, 173)
+                                    .addComponent(jLabel27)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(163, 163, 163)))))
+                    .addContainerGap()))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel26)
+                    .addComponent(txtmakh, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel24)
+                    .addComponent(txtsdt, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 382, Short.MAX_VALUE)
+                .addComponent(bnthoadon)
+                .addContainerGap())
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(jSeparator1)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGap(40, 40, 40)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jButton4)
+                            .addGap(17, 17, 17))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(bnt_seach, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txt_search, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(txtkh, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel6))
+                            .addGap(26, 26, 26)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel25)
+                                .addComponent(txtdc, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(18, 18, 18)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(bnt_them)
+                                        .addComponent(bnt_sua))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                    .addComponent(bnt_lm)
+                                    .addGap(29, 29, 29)))))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel27)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(49, 49, 49)))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void bnt_seachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bnt_seachActionPerformed
+        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) tab.getModel();
+        model.setRowCount(0);
+
+        try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Connection con = DriverManager.getConnection(url, user, pass);
+            String sql = " select * from Mat_Hang where TenHang like '%" + txt_search.getText() + "%'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                nv = new Vector();
+                nv.add(rs.getString(2));
+                nv.add(rs.getString(5));
+                nv.add(rs.getString(1));
+                nv.add(rs.getString(4));
+                model.addRow(nv);
+            }
+            JOptionPane.showMessageDialog(this, "Search Thanh Cong!");
+            con.close();
+        } catch (Exception e) {
+            System.out.println(e);
+            JOptionPane.showMessageDialog(this, "Search That Bai!");
+        }
+    }//GEN-LAST:event_bnt_seachActionPerformed
+
+    private void tabMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabMouseClicked
+        // TODO add your handling code here:
+        r = tab.getSelectedRow();
+        loadlentable(r);
+    }//GEN-LAST:event_tabMouseClicked
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        int i = 0;
+        if (kt == 0) {
+            model1.addRow(nv1);
+            kt++;
+        } else {
+//            System.out.println(model1.getRowCount());
+            for (i = 0; i < model1.getRowCount(); i++) {
+//                System.out.println(model1.getValueAt(i, 0) + "and" + nv1.get(0));
+                if (model1.getValueAt(i, 0).equals(nv1.get(0))) {
+                    ktms = true;
+                    break;
+                } else {
+                    ktms = false;
+                }
+            }
+            if (ktms) {
+                Object a = Integer.parseInt((String) model1.getValueAt(i, 2)) + 1;
+                model1.setValueAt(a + "", i, 2);
+            } else {
+                model1.addRow(nv1);
+            }
+        }
+//        System.out.println(model.getValueAt(r, 3)+"đang test");
+        String soluongms = (Integer.parseInt((String) model.getValueAt(r, 3)) -1)+"";
+                model.setValueAt(soluongms, r, 3);
+        if (model1.getRowCount() != 0) {
+//            System.out.println("dòng" + r);
+            tong += Integer.parseInt((String) model.getValueAt(r, 1));
+            jLabel1.setText(tong + "");
+        }
+        jButton5.setEnabled(true);
+        bnthoadon.setEnabled(true);
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void tab1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tab1MouseClicked
+        // TODO add your handling code here:
+        r1 = tab1.getSelectedRow();
+    }//GEN-LAST:event_tab1MouseClicked
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+       
+       int i = 0;
+        if (model1.getRowCount() != 0) {
+             DefaultTableModel model = (DefaultTableModel) tab.getModel();
+         for (int j = 0; j < model.getRowCount(); j++) {
+             if(model1.getValueAt(r1, 0).toString().equals(model.getValueAt(j, 0).toString())){
+                 String soluongms = (Integer.parseInt((String) model.getValueAt(j, 3)) +1)+"";
+                model.setValueAt(soluongms, j, 3);
+             }
+         }
+//            System.out.println("vị trí"+r1);
+//            System.out.println(r1+" đơn giá "+ model1.getValueAt(r1, 1));
+//            System.out.println( model1.getValueAt(r1, 1));
+            tong -= Integer.parseInt((String) model1.getValueAt(r1, 1));
+            jLabel1.setText(tong + "");
+        } else {
+            tong = 0;
+            jLabel1.setText(tong + "");
+            kt = 0;
+        }
+        if (model1.getRowCount() != 0) {
+            jButton5.setEnabled(true);
+//            System.out.println(model1.getValueAt(i, 2));
+
+            if (model1.getValueAt(r1, 2).equals("1")) {
+//                System.out.println("xóa");
+                ktms1 = true;
+                model1.removeRow(r1);
+            } else {
+                ktms1 = false;
+            }
+            if (!ktms1) {
+//                System.out.println(model1.getValueAt(r1, 2));
+                Object a = Integer.parseInt((String) model1.getValueAt(r1, 2)) - 1;
+                model1.setValueAt(a + "", r1, 2);
+            }
+              if (model1.getRowCount() == 0){
+            jButton5.setEnabled(false);
+            jLabel1.setText("0");
+            bnthoadon.setEnabled(false);
+            }
+        } 
+      
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void bnt_lmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bnt_lmActionPerformed
+        // TODO add your handling code here:
+        tab.setVisible(false);
+        txtsdt.setEnabled(true);
+        txtkh.setEnabled(true);
+        txtdc.setEnabled(true);
+        txtsdt.setText("");
+        txtkh.setText("");
+        txtdc.setText("");
+        bnt_sua.setVisible(false);
+        bnt_them.setVisible(true);
+         model1.setRowCount(0);
+        nv1 = null;
+        model1.addRow(nv1);
+         model1.removeRow(0);
+        kt = 0;
+
+         try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Connection con = DriverManager.getConnection(url, user, pass);
+            String sql1 = "  Select top 1 MaKH from Khach_Hang order by MaKH DESC ";
+            Statement st1 = con.createStatement();
+            ResultSet rs = st1.executeQuery(sql1);
+            while (rs.next()) {
+                id = rs.getInt(1);
+            }
+            id++;
+            txtmakh.setText(id+"");
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }//GEN-LAST:event_bnt_lmActionPerformed
+
+    private void bnt_themActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bnt_themActionPerformed
+        // TODO add your handling code here:
+        tab.setVisible(true);
+        loadtable();
+        txtsdt.setEnabled(false);
+        txtkh.setEnabled(false);
+        txtdc.setEnabled(false);
+        bnt_them.setVisible(false);
+        try {
+            System.out.println(id+"đây là id");
+            String sql = "  insert into  Khach_Hang  (TenKH,DiaChi,SoDT) values(?,?,?)";
+            Connection con = null;
+            PreparedStatement ps = null;
+                con = DriverManager.getConnection(url, user, pass);
+                ps = con.prepareStatement(sql);
+                ps.setString(1, txtkh.getText());
+                ps.setString(2, txtdc.getText());
+                ps.setString(3, txtsdt.getText());
+                ps.execute();
+                JOptionPane.showMessageDialog(this, "Update Thanh Cong!");
+        } catch (Exception e) {
+            e.printStackTrace();
+             System.out.println(123);
+        }
+    }//GEN-LAST:event_bnt_themActionPerformed
+
+    private void bnt_suaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bnt_suaActionPerformed
+        // TODO add your handling code here:
+        tab.setVisible(true);
+        loadtable();
+        txtsdt.setEnabled(false);
+        txtkh.setEnabled(false);
+        txtdc.setEnabled(false);
+        bnt_them.setVisible(false);
+         try {
+            String sql = "  update  Khach_Hang set  TenKH = ?,GioiTinh = ?,DiaChi = ?,SoDT = ? where MaKH like '"+id+"'";
+            Connection con = null;
+            PreparedStatement ps = null;
+            String a;
+                con = DriverManager.getConnection(url, user, pass);
+                ps = con.prepareStatement(sql);
+                ps.setString(1, txtkh.getText());
+                ps.setString(2,"1");
+                ps.setString(3, txtdc.getText());
+                ps.setString(4, txtsdt.getText());
+                ps.execute();
+                JOptionPane.showMessageDialog(this, "Update Thanh Cong!");
+        } catch (Exception e) {
+            e.printStackTrace();
+//             System.out.println(123);
+        }
+    }//GEN-LAST:event_bnt_suaActionPerformed
+
+    private void bnthoadonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bnthoadonActionPerformed
+        // TODO add your handling code here:
+        Vector laydulieu = new Vector();
+        System.out.println(model1.getRowCount()+"đếm bến gio hàng");
+        for (int j = 0; j < model1.getRowCount(); j++) {
+            laydulieu.add(model1.getValueAt(j, 0));
+            laydulieu.add(model1.getValueAt(j, 1));
+            laydulieu.add(model1.getValueAt(j, 2));   
+         }
+          ncc = new HoaDon(txtmakh.getText(),manv,laydulieu);
+          System.out.println(laydulieu+"kiểm tra dữ liệu");
+        setLayout(layout);
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridx = 0;
+        c.gridy = 0;
+        add(ncc, c);
+        jPanel1.setVisible(false);
+        ncc.setVisible(true);
+        
+//        boolean kthd = true;
+//        int i = 0;
+//        //Nhập lên cơ sở dữ liệu
+//        String sql = "Update Hoa_Don set MaNV=?,NgayLap=?,MaKH=? where MaHD like '"+lbhoandon.getText()+"'";
+////        System.out.println(sql);
+//        Connection con = null;
+//        PreparedStatement ps = null;
+//        String a;
+//        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//        Date date = new Date();
+//        String now = dateFormat.format(date).toString();
+//        try {
+//            con = DriverManager.getConnection(url, user, pass);
+//            ps = con.prepareStatement(sql);
+//            ps.setString(1, "4");
+//            ps.setString(2, now);
+//            ps.setString(3, id+"");
+//            ps.execute();
+//            JOptionPane.showMessageDialog(this, "Insert Thanh Cong!");
+//            kthd = true;
+//        } catch (Exception e) {
+//            kthd = false;
+//            e.printStackTrace();
+//            JOptionPane.showMessageDialog(this, "Insert That Bai!");
+//        } finally {
+//            try {
+//                if (ps != null) {
+//                    ps.close();
+//                }
+//            } catch (SQLException se2) {
+//
+//            }
+//            try {
+//                if (con != null) {
+//                    con.close();
+//                }
+//            } catch (SQLException se) {
+//                se.printStackTrace();
+//            }
+//        }
+//        //Kiểm tra 
+////        if (kthd) {
+////            //Lưu Từng Mặt Hàng 
+////            for (i = 0; i < model1.getRowCount(); i++) {
+////                model1.getValueAt(i, 0);
+////                String sql1 = " INSERT INTO Chi_Tiet_Hoa_Don (TenMatKhang,dongia,SoLuong) VALUES(?,?,?) ";
+////                System.out.println(sql1);
+////                Connection con1 = null;
+////                PreparedStatement ps1 = null;
+////                System.out.println(model1.getValueAt(i, 0));
+////                try {
+////                    con1 = DriverManager.getConnection(url, user, pass);
+////                    ps1 = con1.prepareStatement(sql1);
+////                    ps1.setString(1, model1.getValueAt(i, 0)+"");
+////                    ps1.setString(2, model1.getValueAt(i, 1)+"");
+////                    ps1.setString(3, model1.getValueAt(i, 2)+"");
+////                    ps1.execute();
+////                    kthd=true;
+////                } catch (Exception e) {
+////                    kthd=false;
+////                    e.printStackTrace();
+////break;
+////                } finally {
+////                    try {
+////                        if (ps1 != null) {
+////                            ps1.close();
+////                        }
+////                    } catch (SQLException se2) {
+////
+////                    }
+////                    try {
+////                        if (con1 != null) {
+////                            con1.close();
+////                        }
+////                    } catch (SQLException se) {
+////                        se.printStackTrace();
+////                    }
+////                }
+////            }
+//            //chuyển file
+//            if(kthd){
+//                System.setProperty("java.awt.headless", "true");
+// try {
+//            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+//            Connection con2 = DriverManager.getConnection(url, user, pass);
+//            JasperPrint print = JasperFillManager.fillReport("C:\\Users\\Administrator\\Documents\\Documents\\file_duan1\\New Folder (3)\\JavaApplication1\\src\\panel\\hoadon.jasper", null, con2);
+//            JasperViewer jv = new JasperViewer(print, false);
+//            jv.setVisible(true);
+//            JasperExportManager.exportReportToPdfFile(print, "DanhSachSinhVien.pdf");
+//        } catch (Exception ex) {
+//            System.out.println(ex);
+//
+//        }
+//            }
+//        }
+    }//GEN-LAST:event_bnthoadonActionPerformed
+
+    private void txtsdtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtsdtKeyReleased
+        // TODO add your handling code here:
+        boolean kt = true;
+        try {
+            //            System.out.println(txtsdt.getText());
+            // TODO add your handling code here:
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Connection con = DriverManager.getConnection(url, user, pass);
+            String sql = "select * from Khach_Hang where  SoDT = '" + txtsdt.getText() + "'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                //                System.out.println(rs.getString("TenKH") + "123123");
+                if (!rs.getString("TenKH").equals("")) {
+                    txtmakh.setText(rs.getString("MaKH"));
+                    txtsdt.setText(rs.getString("SoDT"));
+                    txtkh.setText(rs.getString("TenKH"));
+                    txtdc.setText(rs.getString("DiaChi"));
+                    bnt_sua.setVisible(true);
+                    bnt_lm.setVisible(true);
+                    tab.setVisible(true);
+                    loadtable();
+                    txtsdt.setEnabled(false);
+                    txtkh.setEnabled(false);
+                    txtdc.setEnabled(false);
+                    bnt_them.setVisible(false);
+                    bnthoadon.setEnabled(false);
+                    kt = false;
+                }
+            }
+
+            con.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        if (kt) {
+            bnt_lm.setVisible(true);
+            bnt_them.setVisible(true);
+        }
+
+    }//GEN-LAST:event_txtsdtKeyReleased
+
+    private void txtmakhMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtmakhMouseClicked
+        // TODO add your handling code here:
+       
+    }//GEN-LAST:event_txtmakhMouseClicked
+
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bnt_lm;
+    private javax.swing.JButton bnt_seach;
+    private javax.swing.JButton bnt_sua;
+    private javax.swing.JButton bnt_them;
+    private javax.swing.JButton bnthoadon;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JTable tab;
+    private javax.swing.JTable tab1;
+    private javax.swing.JTextField txt_search;
+    private javax.swing.JTextField txtdc;
+    private javax.swing.JTextField txtkh;
+    private javax.swing.JLabel txtmakh;
+    private javax.swing.JTextField txtsdt;
+    // End of variables declaration//GEN-END:variables
+}

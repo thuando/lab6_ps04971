@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="120e322b-058d-4592-a577-a2c2dee88585">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="1"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<queryString>
+		<![CDATA[SELECT
+     Mat_Hang."TenHang",
+     Mat_Hang."DonGia",
+     Chi_Tiet_Hoa_Don."MaHang",
+     Chi_Tiet_Hoa_Don."SoLuong",
+     Hoa_Don."NgayLap" AS Hoa_Don_NgayLap,
+     Hoa_Don."MaKH" AS Hoa_Don_MaKH,
+     Hoa_Don."MaNV" AS Hoa_Don_MaNV,
+     Hoa_Don."MaHD" AS Hoa_Don_MaHD,
+     Khach_Hang."MaKH" AS Khach_Hang_MaKH,
+     Khach_Hang."TenKH" AS Khach_Hang_TenKH,
+     Khach_Hang."GioiTinh" AS Khach_Hang_GioiTinh,
+     Khach_Hang."DiaChi" AS Khach_Hang_DiaChi,
+     Khach_Hang."SoDT" AS Khach_Hang_SoDT,
+     Mat_Hang."TenHang",
+     Mat_Hang."DonGia"
+FROM
+     "Chi_Tiet_Hoa_Don" Chi_Tiet_Hoa_Don INNER JOIN "Hoa_Don" Hoa_Don ON Chi_Tiet_Hoa_Don."MaHD" = Hoa_Don."MaHD"
+     INNER JOIN "Khach_Hang" Khach_Hang ON Hoa_Don."MaKH" = Khach_Hang."MaKH"
+     INNER JOIN "Mat_Hang" Mat_Hang ON Chi_Tiet_Hoa_Don."MaHang" = Mat_Hang."MaHang"
+where Hoa_Don."MaHD" = 2]]>
+	</queryString>
+	<field name="TenHang" class="java.lang.String"/>
+	<field name="DonGia" class="java.lang.Long"/>
+	<field name="MaHang" class="java.lang.Integer"/>
+	<field name="SoLuong" class="java.lang.Integer"/>
+	<field name="Hoa_Don_NgayLap" class="java.sql.Timestamp"/>
+	<field name="Hoa_Don_MaKH" class="java.lang.Integer"/>
+	<field name="Hoa_Don_MaNV" class="java.lang.Integer"/>
+	<field name="Hoa_Don_MaHD" class="java.lang.Integer"/>
+	<field name="Khach_Hang_MaKH" class="java.lang.Integer"/>
+	<field name="Khach_Hang_TenKH" class="java.lang.String"/>
+	<field name="Khach_Hang_GioiTinh" class="java.lang.Boolean"/>
+	<field name="Khach_Hang_DiaChi" class="java.lang.String"/>
+	<field name="Khach_Hang_SoDT" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="355" splitType="Stretch">
+			<staticText>
+				<reportElement style="SubTitle" x="20" y="155" width="196" height="22" forecolor="#FF9933" uuid="01b08355-8fa0-4e26-978a-dd3be32f7d3b"/>
+				<textElement>
+					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[Thông Tin Đơn Hàng]]></text>
+			</staticText>
+			<image>
+				<reportElement x="634" y="-56" width="153" height="168" uuid="b8bec1f0-6f74-4d81-98a9-12c80419be82"/>
+				<imageExpression><![CDATA["C:\\Users\\Administrator\\Downloads\\6-degrees-logo-twitter_400x400.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="1" y="-27" width="243" height="86" uuid="f6d835de-e258-4837-82d9-a8114322e66b"/>
+				<imageExpression><![CDATA["C:\\Users\\Administrator\\Downloads\\18197454_1146798648798736_1906399809_n.png"]]></imageExpression>
+			</image>
+			<rectangle>
+				<reportElement x="20" y="194" width="306" height="150" backcolor="#FFCC66" uuid="5f3f0f19-61de-43e5-88fc-0dd142367f5c"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="273" y="-2" width="345" height="47" forecolor="#FF6600" uuid="fc22205d-1d31-448d-abb2-0d9b364e789f"/>
+				<textElement>
+					<font size="36" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PHIẾU XUẤT HÀNG]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="420" y="194" width="306" height="128" backcolor="#FFCC66" uuid="ea2773ae-acd0-4086-a99b-62bf636c39d1"/>
+			</rectangle>
+			<staticText>
+				<reportElement style="Column header" x="20" y="194" width="61" height="15" forecolor="#736343" uuid="20e28212-1f71-44ac-93ea-9e3b656126ff"/>
+				<text><![CDATA[Hoa_Don_NgayLap]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="183" y="194" width="61" height="15" uuid="f5d074bd-eee8-4515-bce6-9d49396e30c1"/>
+				<textFieldExpression><![CDATA[$F{Hoa_Don_NgayLap}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" x="20" y="235" width="61" height="15" forecolor="#736343" uuid="88d8e569-220e-4752-8d07-1e3ac0707c7b"/>
+				<text><![CDATA[Hoa_Don_MaKH]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="183" y="235" width="61" height="15" uuid="e3ca48dc-ffee-4bad-b0d5-5a7a0ea4c69d"/>
+				<textFieldExpression><![CDATA[$F{Hoa_Don_MaKH}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" x="20" y="268" width="61" height="15" forecolor="#736343" uuid="7e62537e-cb6b-4ca2-bf78-35a2c1a8f3ad"/>
+				<text><![CDATA[Hoa_Don_MaNV]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="183" y="268" width="61" height="15" uuid="dca6b956-9996-4cae-9822-51bad1865a14"/>
+				<textFieldExpression><![CDATA[$F{Hoa_Don_MaNV}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" x="20" y="307" width="61" height="15" forecolor="#736343" uuid="f573371f-d8ae-4e4d-995d-78cfd700a72c"/>
+				<text><![CDATA[Hoa_Don_MaHD]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="183" y="307" width="61" height="15" uuid="142b794c-afe1-4b0a-841c-64b898c4d6f8"/>
+				<textFieldExpression><![CDATA[$F{Hoa_Don_MaHD}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" x="441" y="194" width="61" height="15" forecolor="#736343" uuid="61a5b5af-78ea-4fef-92c9-ab159c236b5d"/>
+				<text><![CDATA[Khach_Hang_MaKH]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="549" y="194" width="61" height="15" uuid="46022054-cb2c-4404-b9b6-361d6b9aed2c"/>
+				<textFieldExpression><![CDATA[$F{Khach_Hang_MaKH}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" x="441" y="235" width="61" height="15" forecolor="#736343" uuid="72f7762e-1bc9-468e-98bf-8f4c5e224633"/>
+				<text><![CDATA[Khach_Hang_TenKH]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="549" y="235" width="61" height="15" uuid="306d6207-8912-4dce-97f9-3648b493674b"/>
+				<textFieldExpression><![CDATA[$F{Khach_Hang_TenKH}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" x="441" y="268" width="61" height="15" forecolor="#736343" uuid="913b2609-8cf2-470f-9845-fffa7a6c7c77"/>
+				<text><![CDATA[Khach_Hang_GioiTinh]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="557" y="268" width="61" height="15" uuid="05a632be-cbb8-4379-9711-1abe065f05db"/>
+				<textFieldExpression><![CDATA[$F{Khach_Hang_GioiTinh}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" x="441" y="307" width="61" height="15" forecolor="#736343" uuid="1cbce85a-9999-4605-908f-fb70ec3341ec"/>
+				<text><![CDATA[Khach_Hang_DiaChi]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="549" y="307" width="61" height="15" uuid="41e2ece3-253a-426e-b458-b223302168b1"/>
+				<textFieldExpression><![CDATA[$F{Khach_Hang_DiaChi}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" x="20" y="329" width="61" height="15" forecolor="#736343" uuid="fc857d66-87fe-4f32-8e19-522a7b3d4aaa"/>
+				<text><![CDATA[Khach_Hang_SoDT]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="183" y="329" width="61" height="15" uuid="8b212a15-3c14-44a9-aab3-206c377c04bf"/>
+				<textFieldExpression><![CDATA[$F{Khach_Hang_SoDT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="16" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="802" height="1" uuid="c71220e9-f3af-4ec2-9ac8-447cccbe88a5"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" x="183" y="0" width="421" height="15" forecolor="#736343" uuid="d49947d6-0516-4d88-bc0f-8be509a76e7b"/>
+				<text><![CDATA[TenHang]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="665" y="1" width="61" height="15" forecolor="#736343" uuid="9ca6306a-3d26-4961-a50c-52aaa82cc8bd"/>
+				<text><![CDATA[DonGia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="61" y="0" width="122" height="15" forecolor="#736343" uuid="e96d36e1-8bb7-4f06-ba30-fefc3618df23"/>
+				<text><![CDATA[MaHang]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="604" y="1" width="61" height="15" forecolor="#736343" uuid="7abd63ce-9427-40ec-8473-90560798c9c2"/>
+				<text><![CDATA[SoLuong]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="802" height="15" uuid="57984f72-e698-45e4-844a-20021d72bd0f"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="61" y="0" width="122" height="15" uuid="4b747341-5d30-413a-8bc7-abdf5be3d567"/>
+					<textFieldExpression><![CDATA[$F{MaHang}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="604" y="0" width="61" height="15" uuid="cdc5b2c2-8c68-4c3e-bcb6-4d60d94f2ffd"/>
+					<textFieldExpression><![CDATA[$F{SoLuong}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="183" y="0" width="421" height="15" uuid="d15d5c80-96dc-48b6-bfa9-8cafd3def462"/>
+					<textFieldExpression><![CDATA[$F{TenHang}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="665" y="0" width="61" height="15" uuid="9ed6c114-4063-4599-845e-6244b0e6af46"/>
+					<textFieldExpression><![CDATA[$F{DonGia}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="6" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="802" height="1" uuid="767c47d2-2520-4af9-8df0-9051f40eefee"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="-21" y="1" width="843" height="24" forecolor="#D0B48E" backcolor="#F2EBDF" uuid="fd47000e-5f25-41a1-9c8f-68ea171d2322"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="783" y="1" width="40" height="20" forecolor="#736343" uuid="6f45801e-1e31-4845-abc3-8b7896d6368b"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="703" y="1" width="80" height="20" forecolor="#736343" uuid="695e9958-da6e-4cfc-b746-2853b8137826"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="22" y="1" width="197" height="20" forecolor="#736343" uuid="268abe1b-c532-4481-b0cc-efa46e44878e"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
